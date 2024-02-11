@@ -1,11 +1,15 @@
-import Footer from "./footer.html?raw";
+import FooterHtml from "./html/footer.html?raw";
 
 export const FooterComponentName = 'footer-component';
 
-class FooterComponent extends HTMLElement {
+export default class FooterComponent extends HTMLElement {
   constructor() {
     super();
-    this.innerHTML = Footer
+    this.innerHTML = FooterHtml
+  }
+
+  init() {
+    return this;
   }
 }
 

@@ -9,7 +9,7 @@ class DefaultLayout extends HTMLElement {
     
     this.innerHTML = `
       <${NavbarComponentName}></${NavbarComponentName}>
-      <main class="layout h-screen">
+      <main class="layout">
         <div id="page"></div>
       </main>
       <${FooterComponentName}></${FooterComponentName}>

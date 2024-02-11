@@ -1,9 +1,11 @@
-import DetailsView from "./details.html?raw";
-import HomeView from "./home.html?raw";
+import AboutView from "./about.ts";
+import HomeView from "./home.ts";
+import StartView from "./start.ts";
 
 const Views = {
-  HomeView,
-  DetailsView
+  HomeView: HomeView(),
+  StartView: StartView(),
+  AboutView: AboutView()
 };
 
 export default Views

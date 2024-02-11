@@ -8,7 +8,8 @@ interface RouteProps {
 // routes
 const routes: RouteProps = {
   "/": Views.HomeView,
-  "/details": Views.DetailsView
+  "/start": Views.StartView,
+  "/about": Views.AboutView
 };
 
 document.querySelector<HTMLDivElement>("#page")!.innerHTML =

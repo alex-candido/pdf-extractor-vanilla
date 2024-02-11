@@ -100,6 +100,10 @@ class Card extends HTMLElement {
     }
     shadowRoot.appendChild(contentContainer);
   }
+  
+  init() {
+    return this;
+  }
 }
 
 // Define the new element
