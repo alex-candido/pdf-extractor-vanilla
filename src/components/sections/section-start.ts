@@ -3,8 +3,13 @@ import * as pdfjslib from 'pdfjs-dist';
 const pdfjsWorker = '../../../node_modules/pdfjs-dist/build/pdf.worker.mjs';
 pdfjslib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
-import { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
+import { PDFDocumentProxy, TextItem } from 'pdfjs-dist/types/src/display/api';
 import SectionStartHtml from "./html/section-start.html?raw";
+
+import { findHeaderPage } from '../../services/modules/findHeaderPage';
+import { findIntervalAlternativesOfQuestions } from '../../services/modules/findIntervalAlternativesOfQuestions';
+import { findIntervalQuestion } from '../../services/modules/findIntervalQuestion';
+import { separateAlternatives } from '../../services/modules/separateAlternatives';
 
 export const SectionStartName = "section-start";
 
@@ -49,7 +54,27 @@ export default class SectionStart extends HTMLElement {
         let page_text = await page.getTextContent()
         let text = page_text.items.map((s: any) => s.str).join("")
         this.all_text.push(text)
-        console.log(page_text)
+
+        const questions_intervals = findIntervalQuestion(page_text.items as TextItem[])
+
+        const headerPage = findHeaderPage(questions_intervals)
+
+        const questions = findIntervalAlternativesOfQuestions(questions_intervals)
+
+        const questions_format = questions.map((question, index) => {
+          const alternative = separateAlternatives(question.alternative_interval)
+          const text_base = question.text_base
+          return {
+            alternative,
+            text_base
+          }
+        })
+
+        console.log({
+          headerPage,
+          questions_format,
+          page: i
+        })
       }
       this.all_text.map((_e: any, i: any) => {
         let option: any = document.createElement("option")
@@ -57,7 +82,6 @@ export default class SectionStart extends HTMLElement {
         option.innerText = i + 1
         this.select.appendChild(option)
       })
-      console.log(this.select.value)
       this.afterProcess()
     } catch (err) {
       if (err instanceof Error) {
@@ -89,7 +113,6 @@ export default class SectionStart extends HTMLElement {
   addChangeEvent() {
     this.select.addEventListener("change", () => {
       this.afterProcess()
-      console.log(this.select.value)
     })
   }
 

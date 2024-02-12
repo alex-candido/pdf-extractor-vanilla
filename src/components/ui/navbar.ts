@@ -13,7 +13,6 @@ export default class NavbarComponent extends HTMLElement {
 
   navigateTo() {
     const route: any = NavbarComponent.linkNavHome.getAttribute('link-nav-home')
-    console.log(route)
   }
 
   addClickEvent() {
